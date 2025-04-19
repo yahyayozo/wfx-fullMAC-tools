@@ -1,0 +1,75 @@
+diff --git a/multiprotocol_micriumos/multiprotocol_micriumos.slcp b/multiprotocol_micriumos/multiprotocol_micriumos.slcp
+index 2df924a..e613633 100644
+--- a/multiprotocol_micriumos/multiprotocol_micriumos.slcp
++++ b/multiprotocol_micriumos/multiprotocol_micriumos.slcp
+@@ -21,6 +21,8 @@ component:
+   - id: mpu    
+   - id: simple_led
+     instance: [led0, led1]
++  - id: iostream_eusart
++    instance: [vcom]
+   - id: dmadrv
+   - id: sleeptimer
+   - id: simple_timer_micriumos
+@@ -38,6 +40,7 @@ component:
+   - id: lwip_api
+   - id: lwip_netif_ethernet
+   - id: lwip_app_http
++  - id: lwip_app_lwiperf
+ 
+ provides:
+   - name: device_init_dcdc
+@@ -95,30 +98,45 @@ requires:
+   - name: app_log
+     condition:
+       - brd4162a
++  - name: app_log
++    condition:
++      - brd4187b      
+   - name: app_assert
+     condition:
+       - brd4161a
+   - name: app_assert
+     condition:
+       - brd4162a
++  - name: app_assert
++    condition:
++      - brd4187b
+   - name: iostream_stdlib_config
+     condition:
+       - brd4161a
+   - name: iostream_stdlib_config
+     condition:
+       - brd4162a
++  - name: iostream_stdlib_config
++    condition:
++      - brd4187b      
+   - name: demo_ui
+     condition:
+       - brd4161a
+   - name: demo_ui
+     condition:
+       - brd4162a
++  - name: demo_ui
++    condition:
++      - brd4187b      
+   - name: dmd_memlcd
+     condition:
+       - brd4161a
+   - name: dmd_memlcd
+     condition:
+       - brd4162a
++  - name: dmd_memlcd
++    condition:
++      - brd4187b       
+ source:
+   - path: main.c
+   - path: app.c
+@@ -215,6 +233,7 @@ configuration:
+     condition: [dmd_memlcd]
+ define:
+   - name: DEBUG_EFM
++  - name: IPERF_SERVER
+ tag:
+   - hardware:rf:band:2400
+   - hardware:component:led:2+

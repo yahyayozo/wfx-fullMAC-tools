@@ -19,7 +19,7 @@
 #define WIFI_CLI_PARAMS_H
 
 #include <stdint.h>
-#include "os.h"
+#include "kernel/include/os.h"
 #include "sl_wfx_cmd_api.h"
 #include "lwip/ip_addr.h"
 #include "nvm3_default.h"
@@ -111,6 +111,9 @@
 #ifndef NVM3_KEY_AP_PASSKEY
 #define NVM3_KEY_AP_PASSKEY 3
 #endif
+#ifndef NVM3_KEY_AP_SECURITY_WPA3_PMKSA
+#define NVM3_KEY_AP_SECURITY_WPA3_PMKSA 4
+#endif
 #define IPERF_SERVER                    ///< If defined, iperf server is enabled
 #define HTTP_SERVER                     ///< If defined, http server is enabled
 
@@ -134,6 +137,7 @@ extern char wlan_ssid[32 + 1];
 extern char wlan_passkey[64 + 1];
 extern char wlan_pmk[64 + 3];
 extern sl_wfx_security_mode_t wlan_security;
+extern bool wlan_security_wpa3_pmksa;
 
 extern char softap_ssid[32 + 1];
 extern char softap_passkey[64 + 1];
@@ -198,6 +202,14 @@ typedef enum {
   DHCP_SERVER,
   DHCP_CLIENT
 } dhcp_type_et;
+
+/**************************************************************************//**
+ * @brief: tx rates type is used for converting a uint32_t number to a bitmask
+ *****************************************************************************/
+typedef union {
+    sl_wfx_rate_set_bitmask_t bit_mask;
+    uint32_t rate;
+} tx_rates_u;
 
 /**************************************************************************//**
  * @brief: get/set function pointers.
@@ -272,6 +284,11 @@ extern sem_type_t g_cli_sem;
  * @note:  Maximum number of elements is "SL_WFX_CLI_MAX_PARAMS"
  *****************************************************************************/
 extern param_t wifi_params[SL_WFX_CLI_MAX_PARAMS];
+
+/***************************************************************************//**
+ * @brief convert a given hex string to uint32_t.
+ ******************************************************************************/
+uint32_t convert_rate_string_to_uint32_t(char *rates_str);
 
 /***************************************************************************//**
  * @brief

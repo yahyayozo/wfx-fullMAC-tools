@@ -6,10 +6,10 @@ category: Example|Platform
 package: platform
 quality: evaluation
 component:
+  - id: psa_crypto_tls12_prf
   - id: mbedtls_sha1
   - id: micriumos_bsp
-  - id: lwip_app_lwiperf
-  - id: brd4321a_a06
+  - id: lwip_app_lwiperf  
   - id: lwip_netif_ethernet
   - id: iostream_retarget_stdio
   - id: simple_button
@@ -18,8 +18,7 @@ component:
     instance: [inst]
   - id: micriumos_io_sd_driver_sdhc_arasan
   - id: micriumos_common_lib
-  - id: mbedtls_rsa_2048
-  - id: WGM160PX22KGA2
+  - id: mbedtls_rsa_2048  
   - id: mbedtls_cipher_cbc
   - id: iostream_recommended_stream
   - id: mbedtls_cipher_padding_pkcs7
@@ -37,6 +36,7 @@ component:
   - id: mbedtls_debug
   - id: sl_system_init
   - id: nvm3_default
+  - id: lwip_app_mqtt
   - id: lwip_app_pqtt
   - id: board_control
   - id: lwip_port_micriumos
@@ -44,7 +44,7 @@ component:
   - id: micriumos_kernel
   - id: sl_system
   - id: mbedtls_ecc_secp384r1
-  - id: lwip_api
+  - id: lwip_api  
   - id: mbedtls_ecdhe_key_exchange
   - id: mbedtls_gcm
   - id: device_init_hfrco
@@ -52,42 +52,51 @@ component:
   - id: wfx_fmac_driver
   - id: sleeptimer
   - id: mbedtls_ecdsa_deterministic
+  - id: mbedtls_ecc_curve25519
+  - id: mbedtls_random
+  - id: mbedtls_ccm
+  - id: mbedtls_hash
+  - id: mbedtls_ecdh
+  - id: mbedtls_sha512
 source:
   - path: main.c
   - path: app.c
   - path: app_wifi_events.c 
   - path: wifi/wifi_cli_app.c 
-    folder: wifi
   - path: wifi/wifi_cli_cmd_registration.c 
-    folder: wifi
   - path: wifi/wifi_cli_get_set_cb_func.c
-    folder: wifi
   - path: wifi/wifi_cli_lwip.c
-    folder: wifi
   - path: wifi/wifi_cli_params.c
-    folder: wifi
   - path: mqtt/mqtt_cli_app.c
-    folder: mqtt
   - path: mqtt/mqtt_cli_cmd_registration.c
-    folder: mqtt
   - path: mqtt/mqtt_cli_get_set_cb_func.c
-    folder: mqtt
   - path: mqtt/mqtt_cli_lwip.c 
-    folder: mqtt
   - path: mqtt/mqtt_cli_params.c 
-    folder: mqtt
   - path: mqtt/app_certificate/app_certificate.c 
-    folder: mqtt/app_certificate
   - path: lwip_host/ethernetif.c 
-    folder: lwip_host
   - path: lwip_host/apps/dhcp_client.c 
-    folder: lwip_host/apps
   - path: lwip_host/apps/dhcp_server.c 
-    folder: lwip_host/apps
   - path: altcp_tls/altcp_tls_mbedtls.c
-    folder: altcp_tls
   - path: altcp_tls/altcp_tls_mbedtls_mem.c
-    folder: altcp_tls
+  - path: sae/sl_wfx_sae.c
+  - path: ../wpa_supplicant-2.7/ports/crypto.c
+    directory: wpa_supplicant-2.7/ports
+  - path: ../wpa_supplicant-2.7/ports/wpa_os.c
+    directory: wpa_supplicant-2.7/ports
+  - path: ../wpa_supplicant-2.7/ports/wpa_common.c
+    directory: wpa_supplicant-2.7/ports
+  - path: ../wpa_supplicant-2.7/src/common/dragonfly.c
+    directory: wpa_supplicant-2.7/src/common
+  - path: ../wpa_supplicant-2.7/src/common/sae.c
+    directory: wpa_supplicant-2.7/src/common
+  - path: ../wpa_supplicant-2.7/src/crypto/sha256-kdf.c
+    directory: wpa_supplicant-2.7/src/crypto
+  - path: ../wpa_supplicant-2.7/src/crypto/sha256-prf.c
+    directory: wpa_supplicant-2.7/src/crypto
+  - path: ../wpa_supplicant-2.7/src/utils/common.c
+    directory: wpa_supplicant-2.7/src/utils
+  - path: ../wpa_supplicant-2.7/src/utils/wpabuf.c
+    directory: wpa_supplicant-2.7/src/utils
 tag: 
   - hardware:component:led:2+
   - hardware:component:button:2+
@@ -99,61 +108,80 @@ include:
   - path: mqtt
     file_list:
       - path: mqtt_cli_app.h 
-        folder: mqtt
       - path: mqtt_cli_cmd_registration.h 
-        folder: mqtt
       - path: mqtt_cli_get_set_cb_func.h
-        folder: mqtt
       - path: mqtt_cli_lwip.h
-        folder: mqtt
       - path: mqtt_cli_params.h
-        folder: mqtt
   - path: mqtt/app_certificate
     file_list:
       - path: app_certificate.h 
-        folder: mqtt/app_certificate
   - path: wifi
     file_list: 
       - path: wifi_cli_app.h 
-        folder: wifi
       - path: wifi_cli_cmd_registration.h 
-        folder: wifi
       - path: wifi_cli_get_set_cb_func.h 
-        folder: wifi
       - path: wifi_cli_lwip.h 
-        folder: wifi
       - path: wifi_cli_params.h 
-        folder: wifi
   - path: lwip_host
     file_list:
       - path: ethernetif.h 
-        folder: lwip_host
       - path: lwipopts.h 
-        folder: lwip_host
   - path: lwip_host/apps
     file_list:
       - path: dhcp_client.h 
-        folder: lwip_host/apps
       - path: dhcp_server.h 
-        folder: lwip_host/apps
   - path: altcp_tls
     file_list:
       - path: altcp_tls_mbedtls_mem.h 
-        folder: altcp_tls
       - path: altcp_tls_mbedtls_structs.h 
-        folder: altcp_tls
       - path: certs.h 
-        folder: altcp_tls
       - path: net.h 
-        folder: altcp_tls
       - path: ssl_internal.h 
-        folder: altcp_tls
+  - path: sae
+    file_list:
+      - path: sl_wfx_sae.h
+  - path: ../wpa_supplicant-2.7/ports
+    file_list:
+      - path: includes.h
+      - path: wpa_os.h
+    directory: wpa_supplicant-2.7/ports
+  - path: ../wpa_supplicant-2.7/src/common
+    file_list:
+      - path: defs.h
+      - path: dragonfly.h
+      - path: ieee802_11_defs.h
+      - path: sae.h
+      - path: wpa_common.h
+    directory: wpa_supplicant-2.7/src/common
+  - path: ../wpa_supplicant-2.7/src/crypto
+    file_list:
+      - path: crypto.h
+      - path: dh_groups.h
+      - path: random.h
+      - path: sha256.h
+      - path: sha384.h
+      - path: sha512.h
+    directory: wpa_supplicant-2.7/src/crypto
+  - path: ../wpa_supplicant-2.7/src/utils
+    file_list:
+      - path: common.h
+      - path: const_time.h
+      - path: trace.h
+      - path: wpa_debug.h
+      - path: wpabuf.h
+    directory: wpa_supplicant-2.7/src/utils
+  - path: ../wpa_supplicant-2.7
+    directory: wpa_supplicant-2.7
+  - path: ../wpa_supplicant-2.7/src
+    directory: wpa_supplicant-2.7/src
 define:
+  - name: MBEDTLS_PSA_BUILTIN_ALG_RSA_PKCS1V15_SIGN
   - name: DEBUG_EFM
   - name: MBEDTLS_ALLOW_PRIVATE_ACCESS
   - name: SLI_MBEDTLS_AUTODETECT_CIPHERSUITES
   - name: MBEDTLS_ECDH_LEGACY_CONTEXT
   - name: TEST_SUITE_MEMORY_BUFFER_ALLOC
+  - name: MBEDTLS_PLATFORM_ZEROIZE_ALT
 configuration:
   - name: OS_CFG_TASK_Q_EN 
     value: 1
@@ -183,6 +211,8 @@ configuration:
     value: '0'
   - name: mbedtls_mpi_max
     value: '1024'
+  - name: SL_CLI_INST_TASK_STACK_SIZE
+    value: 800
   - condition: [iostream_usart]
     name: SL_IOSTREAM_USART_VCOM_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION
     value: '0'
@@ -210,5 +240,3 @@ toolchain_settings:
 template_contribution:
   - name: mbedtls_mpi_max
     value: 1024
-  - name: mbedtls_config_undefs
-    value: MBEDTLS_PLATFORM_MEMORY
